@@ -17,23 +17,29 @@ import com.sample.wewatch.network.RetrofitClient.TMDB_IMAGEURL
 
 import com.squareup.picasso.Picasso
 
-open class AddMovieActivity : AppCompatActivity() {
+abstract class AddMovieActivity : AppCompatActivity (),
+  AddMovieContract.ViewInterface {
   private lateinit var titleEditText: EditText
   private lateinit var releaseDateEditText: EditText
   private lateinit var movieImageView: ImageView
   private lateinit var dataSource: LocalDataSource
+  private lateinit var addMoviePresenter: AddMoviePresenter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_add_movie)
+    setupPresenter()
     setupViews()
     dataSource = LocalDataSource(application)
   }
-
   fun setupViews() {
     titleEditText = findViewById(R.id.movie_title)
     releaseDateEditText = findViewById(R.id.movie_release_date)
     movieImageView = findViewById(R.id.movie_imageview)
+  }
+  fun setupPresenter() {
+    val dataSource = LocalDataSource(application)
+    addMoviePresenter = AddMoviePresenter(this, dataSource)
   }
 
   //search onClick
@@ -80,4 +86,12 @@ open class AddMovieActivity : AppCompatActivity() {
   companion object {
     const val SEARCH_MOVIE_ACTIVITY_REQUEST_CODE = 2
   }
+  override fun displayMessage (message: String ) {
+    Toast.makeText(this@AddMovieActivity, message, Toast.LENGTH_LONG )
+      .show()
+  }
+  override fun displayError (message: String ) {
+    displayMessage (message)
+  }
+
 }
