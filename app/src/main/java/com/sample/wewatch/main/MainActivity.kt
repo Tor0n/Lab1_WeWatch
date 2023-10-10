@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
   private lateinit var fab: FloatingActionButton
   private lateinit var noMoviesLayout: LinearLayout
 
-  private lateinit var dataSource: LocalDataSource
   private lateinit var mainPresenter: MainContract.PresenterInterface
 
   private val TAG = "MainActivity"
@@ -64,7 +63,7 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
   }
   private fun setupPresenter(){
     val dataSourse = LocalDataSource(application)
-    mainPresenter = MainPresenter(this, dataSource)
+    mainPresenter = MainPresenter(this, dataSourse)
   }
 
   override fun displayMovies(movieList: List<Movie>) {
