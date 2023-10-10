@@ -26,12 +26,13 @@ import io.reactivex.schedulers.Schedulers
 
 //const val SEARCH_QUERY = "searchQuery"
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
   private val TAG = "SearchActivity"
   private lateinit var searchResultsRecyclerView: RecyclerView
   private lateinit var adapter: SearchAdapter
   private lateinit var noMoviesTextView: TextView
   private lateinit var progressBar: ProgressBar
+  private lateinit var searchPresenter: SearchPresenter
   private var query = ""
 
   private var dataSource = RemoteDataSource()
@@ -62,6 +63,10 @@ class SearchActivity : AppCompatActivity() {
 
   private fun setupViews() {
     searchResultsRecyclerView.layoutManager = LinearLayoutManager(this)
+  }
+  private fun setupPresenter() {
+    val dataSource = RemoteDataSource()
+    searchPresenter = SearchPresenter(this, dataSource)
   }
 
   fun getSearchResults(query: String) {
@@ -94,7 +99,7 @@ class SearchActivity : AppCompatActivity() {
       }
     }
 
-  fun displayResult(tmdbResponse: TmdbResponse) {
+  override fun displayResult(tmdbResponse: TmdbResponse) {
     progressBar.visibility = INVISIBLE
 
     if (tmdbResponse.totalResults == null || tmdbResponse.totalResults == 0) {
@@ -114,7 +119,7 @@ class SearchActivity : AppCompatActivity() {
     Toast.makeText(this@SearchActivity, string, Toast.LENGTH_LONG).show()
   }
 
-  fun displayError(string: String) {
+  override fun displayError(string: String) {
     showToast(string)
   }
 
