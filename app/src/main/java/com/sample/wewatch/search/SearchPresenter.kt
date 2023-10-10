@@ -22,6 +22,7 @@ class SearchPresenter (
 
     //1
     val searchResultsObservable: (String) -> Observable<TmdbResponse> = { query -> dataSource.searchResultsObservable(query) }
+
     //2
     val observer: DisposableObserver<TmdbResponse>
         get() = object : DisposableObserver<TmdbResponse>() {

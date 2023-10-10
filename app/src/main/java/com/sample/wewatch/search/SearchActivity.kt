@@ -26,7 +26,7 @@ import io.reactivex.schedulers.Schedulers
 
 //const val SEARCH_QUERY = "searchQuery"
 
-class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
+abstract class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
   private val TAG = "SearchActivity"
   private lateinit var searchResultsRecyclerView: RecyclerView
   private lateinit var adapter: SearchAdapter
@@ -34,9 +34,6 @@ class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
   private lateinit var progressBar: ProgressBar
   private lateinit var searchPresenter: SearchPresenter
   private var query = ""
-
-  private var dataSource = RemoteDataSource()
-  private val compositeDisposable = CompositeDisposable()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -69,17 +66,6 @@ class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
     val dataSource = RemoteDataSource()
     searchPresenter = SearchPresenter(this, dataSource)
   }
-
-  fun getSearchResults(query: String) {
-    val searchResultsDisposable = searchResultsObservable(query)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeWith(observer)
-
-    compositeDisposable.add(searchResultsDisposable)
-  }
-
-  val searchResultsObservable: (String) -> Observable<TmdbResponse> = { query -> dataSource.searchResultsObservable(query) }
 
   val observer: DisposableObserver<TmdbResponse>
     get() = object : DisposableObserver<TmdbResponse>() {
