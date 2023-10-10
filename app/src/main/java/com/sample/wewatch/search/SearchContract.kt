@@ -9,7 +9,6 @@ class SearchContract {
     }
     interface ViewInterface {
         fun displayResult(tmdbResponse: TmdbResponse)
-        fun displayMessage(message: String)
         fun displayError(message: String)
     }
 }

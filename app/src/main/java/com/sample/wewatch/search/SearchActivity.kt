@@ -26,7 +26,7 @@ import io.reactivex.schedulers.Schedulers
 
 //const val SEARCH_QUERY = "searchQuery"
 
-abstract class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
+class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
   private val TAG = "SearchActivity"
   private lateinit var searchResultsRecyclerView: RecyclerView
   private lateinit var adapter: SearchAdapter
