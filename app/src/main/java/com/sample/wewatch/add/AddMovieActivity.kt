@@ -42,6 +42,11 @@ abstract class AddMovieActivity : AppCompatActivity (),
     addMoviePresenter = AddMoviePresenter(this, dataSource)
   }
 
+  override fun returnToMain() {
+    setResult(Activity.RESULT_OK)
+    finish()
+  }
+
   //search onClick
   fun goToSearchMovieActivity(v: View) {
     val title = titleEditText.text.toString()
