@@ -22,7 +22,7 @@ abstract class AddMovieActivity : AppCompatActivity (),
   private lateinit var titleEditText: EditText
   private lateinit var releaseDateEditText: EditText
   private lateinit var movieImageView: ImageView
-  private lateinit var dataSource: LocalDataSource
+  //private lateinit var dataSource: LocalDataSource
   private lateinit var addMoviePresenter: AddMoviePresenter
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +30,7 @@ abstract class AddMovieActivity : AppCompatActivity (),
     setContentView(R.layout.activity_add_movie)
     setupPresenter()
     setupViews()
-    dataSource = LocalDataSource(application)
+    //dataSource = LocalDataSource(application)
   }
   fun setupViews() {
     titleEditText = findViewById(R.id.movie_title)
@@ -51,21 +51,12 @@ abstract class AddMovieActivity : AppCompatActivity (),
   }
 
   //addMovie onClick
-  fun onClickAddMovie(v: View) {
-
-    if (TextUtils.isEmpty(titleEditText.text)) {
-      showToast("Movie title cannot be empty")
-    } else {
-      val title = titleEditText.text.toString()
-      val releaseDate = releaseDateEditText.text.toString()
-      val posterPath = if (movieImageView.tag != null) movieImageView.tag.toString() else ""
-
-      val movie = Movie(title = title, releaseDate = releaseDate, posterPath = posterPath)
-      dataSource.insert(movie)
-
-      setResult(Activity.RESULT_OK)
-      finish()
-    }
+  fun onClickAddMovie (view: View) {
+    val title = titleEditText.text.toString()
+    val releaseDate = releaseDateEditText.text.toString()
+    val posterPath = if (movieImageView.tag != null )
+      movieImageView.tag.toString() else ""
+    addMoviePresenter.addMovie (title, releaseDate, posterPath)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
