@@ -17,7 +17,7 @@ import com.sample.wewatch.network.RetrofitClient.TMDB_IMAGEURL
 
 import com.squareup.picasso.Picasso
 
-abstract class AddMovieActivity : AppCompatActivity (),
+class AddMovieActivity : AppCompatActivity (),
   AddMovieContract.ViewInterface {
   private lateinit var titleEditText: EditText
   private lateinit var releaseDateEditText: EditText

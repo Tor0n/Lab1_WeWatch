@@ -48,17 +48,18 @@ class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
     val i = intent
     query = i.getStringExtra(SEARCH_QUERY) ?: ""
     setupViews()
+    setupPresenter()
   }
 
   override fun onStart() {
     super.onStart()
     progressBar.visibility = VISIBLE
-    getSearchResults(query)
+    searchPresenter.getSearchResults(query)
   }
 
   override fun onStop() {
     super.onStop()
-    compositeDisposable.clear()
+    searchPresenter.stop()
   }
 
   private fun setupViews() {
